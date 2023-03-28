@@ -1,6 +1,7 @@
 package co.hadi.moradi.sample.api.convertpersianword.config;
 
 import co.hadi.moradi.sample.api.convertpersianword.utils.PersianTextUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.ConditionalGenericConverter;
 import org.springframework.stereotype.Component;
@@ -31,8 +32,10 @@ public class PersianConverter implements ConditionalGenericConverter {
 
     @Override
     public Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType) {
+        if (sourceType.getType() == String.class && (source == null || StringUtils.isEmpty((String) source))) {
+            return source;
+        }
         // Conversion logic here
-        // In this example it strips "value" from the source string
         if (targetType.getType() == String.class) {
             return PersianTextUtils.normalizeString(source.toString());
         } else if (targetType.getType() == LocalDate.class) {
