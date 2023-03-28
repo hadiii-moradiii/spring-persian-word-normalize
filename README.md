@@ -1,2 +1,2 @@
-# spring-persian-word-normalize
-in this project i use spring boot HandlerInterceptor and AttributeConverter for convert persian word
+# spring-convert-persian-number
+in this project with spring boot try to convert persian number to english number 
