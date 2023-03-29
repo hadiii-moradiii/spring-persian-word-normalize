@@ -32,16 +32,22 @@ public class PersianConverter implements ConditionalGenericConverter {
 
     @Override
     public Object convert(Object source, TypeDescriptor sourceType, TypeDescriptor targetType) {
-        if (sourceType.getType() == String.class && (source == null || StringUtils.isEmpty((String) source))) {
+        if (source == null) {
             return source;
         }
         // Conversion logic here
         if (targetType.getType() == String.class) {
             return PersianTextUtils.normalizeString(source.toString());
         } else if (targetType.getType() == LocalDate.class) {
+            if (StringUtils.isEmpty((String) source)) {
+                return null;
+            }
             String normalizeString = PersianTextUtils.normalizeString(source.toString());
             return LocalDate.parse(normalizeString);
         } else if (targetType.getType() == LocalDateTime.class) {
+            if (StringUtils.isEmpty((String) source)) {
+                return null;
+            }
             String normalizeString = PersianTextUtils.normalizeString(source.toString());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             return LocalDateTime.parse(normalizeString, formatter);
